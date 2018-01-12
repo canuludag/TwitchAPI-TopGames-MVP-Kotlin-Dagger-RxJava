@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class ListTopGamesModel @Inject constructor(private val apiService: TwitchAPIService) : ListTopGamesContract.Model {
 
-    override fun fetchTopGames(): Call<TwitchTopGames> = apiService.getTopGames(BuildConfig.CLIENT_ID)
+    override fun fetchTopGames(): Call<TwitchTopGames> = apiService.getTopGames(BuildConfig.TWITCH_CLIENT_ID)
 
 }

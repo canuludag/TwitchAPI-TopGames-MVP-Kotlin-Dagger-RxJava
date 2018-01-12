@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+def keyPropertiesFile = rootProject.file("key.properties")
+def keyProperties = new Properties()
+keyProperties.load(new FileInputStream(keyPropertiesFile))
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -17,18 +21,20 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "BASE_URL", "\"https://api.twitch.tv/helix/\""
-            buildConfigField "String", "CLIENT_ID", "\"2ph8g6rxgfolis656mmzleodtc1g3p\""
             minifyEnabled false
             debuggable true
         }
 
         release {
             buildConfigField "String", "BASE_URL", "\"https://api.twitch.tv/helix/\""
-            buildConfigField "String", "CLIENT_ID", "\"2ph8g6rxgfolis656mmzleodtc1g3p\""
             minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildTypes.each {
+        it.buildConfigField 'String', "TWITCH_CLIENT_ID", keyProperties['twitch_client_id']
     }
 }
 
